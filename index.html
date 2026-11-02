@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>База даних — теорія, завдання, тест</title>
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#1b2438;--mute:#5a667d;--line:#cfd8e3;--acc:#0f766e;--accbg:#d9f0ec;--hl:#fde68a;--ok:#166534;--okbg:#dcfce7;--bad:#991b1b;--badbg:#fee2e2}
+@media (prefers-color-scheme:dark){:root{--bg:#121826;--card:#1b2438;--ink:#e8edf5;--mute:#9aa7bd;--line:#33405a;--acc:#5eead4;--accbg:#12403c;--hl:#5b4a0b;--ok:#86efac;--okbg:#10361f;--bad:#fca5a5;--badbg:#431616}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:2.2rem 1rem 1rem;max-width:860px;margin:auto}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.25}
+h1{font-size:2.2rem;margin:0 0 .3rem}
+header p{margin:0;color:var(--mute)}
+nav{display:flex;gap:.5rem;max-width:860px;margin:0 auto;padding:0 1rem;flex-wrap:wrap}
+nav button{flex:1;min-width:140px;padding:.7rem 1rem;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;border-radius:8px 8px 0 0;cursor:pointer}
+nav button[aria-selected=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+@media (prefers-color-scheme:dark){nav button[aria-selected=true]{color:#0b1f1d}}
+main{max-width:860px;margin:0 auto 3rem;padding:0 1rem}
+section{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 0 10px 10px;padding:1.5rem}
+section.on{display:block}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.def{border-left:4px solid var(--acc);background:var(--accbg);padding:.7rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0}
+.ex{color:var(--mute);font-style:italic}
+table{border-collapse:collapse;width:100%;margin:.8rem 0}
+.tw{overflow-x:auto}
+th,td{border:1px solid var(--line);padding:.45rem .7rem;text-align:left}
+th{background:var(--accbg)}
+td.h,th.h{background:var(--hl)}
+tr.h td{background:var(--hl)}
+.ctl{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
+.btn{padding:.55rem 1rem;border:1px solid var(--acc);background:var(--card);color:var(--ink);border-radius:8px;font:inherit;cursor:pointer}
+.btn.p{background:var(--acc);color:#fff}
+@media (prefers-color-scheme:dark){.btn.p{color:#0b1f1d}}
+.note{min-height:1.6em;margin:.4rem 0;font-weight:600}
+select{font:inherit;padding:.3rem;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.fb{padding:.6rem 1rem;border-radius:8px;margin-top:.8rem}
+.fb.ok{background:var(--okbg)}.fb.bad{background:var(--badbg)}
+.opt{display:block;width:100%;text-align:left;margin:.4rem 0;padding:.65rem 1rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font:inherit;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}
+.opt.bad{background:var(--badbg);border-color:var(--bad)}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.score{font-size:2.4rem;font-family:Georgia,serif}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>База даних</h1>
+<p>Інформатика · інтерактивний матеріал: теорія, компетентнісне завдання, тест</p>
+</header>
+<nav role="tablist" aria-label="Розділи">
+<button role="tab" aria-selected="true" data-t="th">Теорія</button>
+<button role="tab" aria-selected="false" data-t="task">Компетентнісне завдання</button>
+<button role="tab" aria-selected="false" data-t="test">Тест</button>
+</nav>
+<main>
+
+<section id="th" class="on" role="tabpanel">
+<h2>Що таке база даних?</h2>
+<p>Уявіть шкільну бібліотеку. Щоб знайти потрібну книгу серед сотень, бібліотекарка користується каталогом, де є назва, автор, рік видання, жанр. Такий каталог — приклад бази даних.</p>
+<div class="def"><b>База даних (БД)</b> — це впорядкований набір інформації, яку можна зберігати, шукати, змінювати або аналізувати.</div>
+<p><b>Приклади:</b> накладна в магазині (товари, ціна, кількість); список контактів у смартфоні; класний журнал (оцінки та відомості про учнів).</p>
+
+<h2>Основні терміни</h2>
+<p>Натискайте кнопки, щоб побачити, що таке поле і запис у таблиці «Книги».</p>
+<div class="ctl">
+<button class="btn" data-m="field">Показати поле</button>
+<button class="btn" data-m="rec">Показати запис</button>
+<button class="btn" data-m="key">Показати ключ</button>
+<button class="btn" data-m="off">Скинути</button>
+</div>
+<div class="tw"><table id="lib">
+<thead><tr><th>ID</th><th>Назва книги</th><th>Автор</th><th>Рік видання</th><th>Наявність</th></tr></thead>
+<tbody>
+<tr><td>001</td><td>Гаррі Поттер</td><td>Дж. Ролінг</td><td>2017</td><td>Так</td></tr>
+<tr><td>002</td><td>Енеїда</td><td>І. Котляревський</td><td>2021</td><td>Так</td></tr>
+<tr><td>003</td><td>Гоббіт</td><td>Дж. Толкін</td><td>2021</td><td>Ні</td></tr>
+</tbody></table></div>
+<div class="note" id="mnote" aria-live="polite"></div>
+
+<div class="def"><b>Поле</b> — окремий елемент інформації, колонка таблиці (наприклад, «Ім’я»).<br>
+<b>Запис</b> — рядок таблиці з повною інформацією про один об’єкт. Одна особа або одна книга — це один запис.</div>
+<p class="ex">Запис про учня: Ім’я: Олександр; Прізвище: Лазарець; Дата народження: 12.02.2010; Клас: 9-А; Середній бал: 10.5.</p>
+
+<h2>Типи даних</h2>
+<p>Тип даних вказує, якого виду інформація зберігається в полі.</p>
+<div class="tw"><table>
+<tr><th>Тип</th><th>Для чого</th><th>Приклад</th></tr>
+<tr><td><b>Текстовий</b></td><td>імена, прізвища, назви</td><td>«Оля», «Гаррі Поттер»</td></tr>
+<tr><td><b>Числовий</b></td><td>вік, оцінки, ціни</td><td>14; 95.50</td></tr>
+<tr><td><b>Дата/час</b></td><td>дати народження, розклад</td><td>15.03.2010</td></tr>
+<tr><td><b>Логічний</b></td><td>відповіді «так» / «ні»</td><td>Чи любить піцу? — Так</td></tr>
+</table></div>
+
+<h2>Ключове поле</h2>
+<div class="def"><b>Ключ (ключове поле)</b> — поле, яке унікально ідентифікує кожен запис.</div>
+<p>У журналі двоє учнів можуть мати однакові імена. Якщо кожному присвоїти унікальний номер (ID) — це і буде ключ: ID 101 — Марія Іваненко, ID 102 — Марія Петрів. Ключ допомагає уникнути плутанини й точно знайти потрібний запис.</p>
+
+<h2>Чому бази даних важливі?</h2>
+<p>Вони є в магазинах (облік товарів), лікарнях (медичні картки), соцмережах (пости й профілі), музичних застосунках. Завдяки чіткій організації інформації база швидко опрацьовує великі обсяги даних.</p>
+<div class="ctl"><button class="btn p" data-go="task">До завдання</button></div>
+</section>
+
+<section id="task" role="tabpanel">
+<h2>Компетентнісне завдання: «Шкільний спортивний гурток»</h2>
+<p>Вчитель фізкультури хоче замінити паперовий список гуртківців на базу даних. Допоможіть її спроєктувати.</p>
+<h3>Частина 1. Типи даних</h3>
+<p>Для кожного поля оберіть відповідний тип даних.</p>
+<div class="tw"><table id="tt">
+<tr><th>Поле</th><th>Приклад значення</th><th>Тип даних</th></tr>
+</table></div>
+<h3>Частина 2. Ключове поле</h3>
+<p>Яке поле найкраще підходить на роль ключа? <select id="key" aria-label="Ключове поле"></select></p>
+<div class="ctl"><button class="btn p" id="chk">Перевірити</button></div>
+<div class="note" id="tnote" aria-live="polite"></div>
+
+<h3>Частина 3. Аналіз таблиці</h3>
+<div class="tw"><table>
+<tr><th>Номер</th><th>Прізвище</th><th>Клас</th><th>Дата вступу</th><th>Є довідка</th></tr>
+<tr><td>1</td><td>Мельник</td><td>7-Б</td><td>01.09.2025</td><td>Так</td></tr>
+<tr><td>2</td><td>Мельник</td><td>8-А</td><td>15.09.2025</td><td>Ні</td></tr>
+<tr><td>3</td><td>Шевчук</td><td>7-Б</td><td>01.09.2025</td><td>Так</td></tr>
+<tr><td>4</td><td>Бондар</td><td>9-А</td><td>20.10.2025</td><td>Так</td></tr>
+</table></div>
+<p>Введіть числа: кількість полів <input id="n1" type="number" min="0" style="width:4.5em" aria-label="Кількість полів"> кількість записів <input id="n2" type="number" min="0" style="width:4.5em" aria-label="Кількість записів"></p>
+<p>Чому поле «Прізвище» не годиться для ключа? <select id="why" aria-label="Чому не годиться">
+<option value="">— оберіть —</option>
+<option value="a">Воно текстове</option>
+<option value="b">Прізвища можуть повторюватися</option>
+<option value="c">Воно занадто довге</option></select></p>
+<div class="ctl"><button class="btn p" id="chk2">Перевірити</button></div>
+<div class="note" id="tnote2" aria-live="polite"></div>
+</section>
+
+<section id="test" role="tabpanel">
+<div id="tbox"></div>
+</section>
+</main>
+
+<script>
+// ---- вкладки ----
+const tabs=document.querySelectorAll('nav button');
+function show(id){tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id));document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0)}
+tabs.forEach(b=>b.onclick=()=>show(b.dataset.t));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+// ---- інтерактивна таблиця ----
+const lib=document.getElementById('lib'),mn=document.getElementById('mnote');
+function clearH(){lib.querySelectorAll('.h').forEach(e=>e.classList.remove('h'))}
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{
+ clearH();const m=b.dataset.m;
+ if(m==='field'){lib.querySelectorAll('tr').forEach(r=>r.children[2].classList.add('h'));mn.textContent='Виділено поле «Автор» — одна колонка, значення одного виду.'}
+ else if(m==='rec'){lib.tBodies[0].rows[1].classList.add('h');mn.textContent='Виділено запис про «Енеїду» — усі відомості про одну книгу.'}
+ else if(m==='key'){lib.querySelectorAll('tr').forEach(r=>r.children[0].classList.add('h'));mn.textContent='ID — ключове поле: у кожної книги свій унікальний номер.'}
+ else mn.textContent='';
+});
+
+// ---- компетентнісне завдання ----
+const types=['Текстовий','Числовий','Дата/час','Логічний'];
+const fields=[['Прізвище','Мельник',0],['Клас','7-Б',0],['Номер гуртківця','101',1],['Дата вступу','01.09.2025',2],['Є медична довідка','Так',3],['Зріст, см','162',1]];
+const tt=document.getElementById('tt'),keySel=document.getElementById('key');
+keySel.innerHTML='<option value="">— оберіть —</option>'+fields.map((f,i)=>`<option value="${i}">${f[0]}</option>`).join('');
+fields.forEach((f,i)=>{const r=tt.insertRow();r.innerHTML=`<td>${f[0]}</td><td>${f[1]}</td><td><select id="s${i}" aria-label="Тип поля ${f[0]}"><option value="">— оберіть —</option>${types.map((t,j)=>`<option value="${j}">${t}</option>`).join('')}</select></td>`});
+document.getElementById('chk').onclick=()=>{
+ let ok=0;fields.forEach((f,i)=>{const s=document.getElementById('s'+i);const good=s.value!==''&&+s.value===f[2];s.style.borderColor=good?'var(--ok)':'var(--bad)';if(good)ok++});
+ const k=keySel.value==='2';
+ const n=document.getElementById('tnote');
+ n.className='note '+((ok===6&&k)?'ok':'bad');
+ n.textContent=`Правильних типів: ${ok} з 6. `+(k?'Ключ обрано правильно.':'Ключ: оберіть поле, унікальне для кожного запису.')+(ok===6&&k?' Чудово!':'');
+};
+document.getElementById('chk2').onclick=()=>{
+ const a=+document.getElementById('n1').value===5,b=+document.getElementById('n2').value===4,c=document.getElementById('why').value==='b';
+ const n=document.getElementById('tnote2');
+ n.className='note '+((a&&b&&c)?'ok':'bad');
+ n.textContent=(a&&b&&c)?'Усе вірно: 5 полів, 4 записи; прізвища повторюються (два Мельники), тому ключем має бути «Номер».':`Поля: ${a?'✓':'✗'}  Записи: ${b?'✓':'✗'}  Пояснення: ${c?'✓':'✗'}. Підказка: поле — колонка, запис — рядок (без заголовка).`;
+};
+
+// ---- тест ----
+const Q=[
+['Що таке база даних?',['Впорядкований набір інформації, яку можна зберігати, шукати й змінювати','Лише список контактів','Програма для малювання','Ігровий файл'],0,'БД — це впорядкований набір інформації для зберігання, пошуку, зміни й аналізу.'],
+['Що в таблиці називають полем?',['Рядок таблиці','Колонку з певним видом інформації','Усю таблицю','Назву файлу'],1,'Поле — окремий елемент інформації, колонка таблиці.'],
+['Що таке запис?',['Колонка таблиці','Тип даних','Рядок з повною інформацією про один об’єкт','Пароль до бази'],2,'Запис — рядок таблиці, що складається з кількох полів.'],
+['Скільки записів містить таблиця «Книги» з теорії?',['5','3','4','15'],1,'Три рядки з даними — три книги, тобто три записи. П’ять — це кількість полів.'],
+['Який тип даних доречний для поля «Дата народження»?',['Текстовий','Логічний','Дата/час','Числовий'],2,'Дати зберігають у типі «Дата/час».'],
+['Який тип даних має поле «Наявність» (Так/Ні)?',['Логічний','Числовий','Дата/час','Текстовий'],0,'Відповіді «так»/«ні» — логічний тип.'],
+['Для чого потрібне ключове поле?',['Щоб прикрасити таблицю','Щоб унікально ідентифікувати кожен запис','Щоб зберігати лише числа','Щоб видаляти записи'],1,'Ключ унікально визначає запис і запобігає плутанині.'],
+['Яке поле найкраще підійде ключем у класному журналі?',['Ім’я','Клас','Унікальний номер (ID)','Середній бал'],2,'Імена, класи й бали можуть повторюватися, а ID — ні.'],
+['Який тип даних у поля «Рік видання»?',['Логічний','Числовий','Дата/час','Текстовий'],1,'У прикладі з теорії рік видання — числовий.'],
+['Що з переліченого НЕ є прикладом бази даних?',['Каталог шкільної бібліотеки','Список контактів у смартфоні','Класний журнал','Малюнок у графічному редакторі'],3,'Малюнок не є впорядкованим набором записів, який можна шукати й аналізувати.']
+];
+let qi=0,sc=0,done=false;
+const box=document.getElementById('tbox');
+function render(){
+ if(qi>=Q.length){const p=Math.round(sc/Q.length*100);
+  box.innerHTML=`<h2>Результат</h2><div class="score">${sc} / ${Q.length}</div><p>${p>=80?'Відмінно! Тема засвоєна.':p>=50?'Непогано, але варто ще раз переглянути теорію.':'Поверніться до теорії та спробуйте ще раз.'}</p><div class="ctl"><button class="btn p" id="rs">Пройти знову</button><button class="btn" id="rt">До теорії</button></div>`;
+  document.getElementById('rs').onclick=()=>{qi=0;sc=0;render()};document.getElementById('rt').onclick=()=>show('th');return}
+ const q=Q[qi];done=false;
+ box.innerHTML=`<div class="bar"><i style="width:${qi/Q.length*100}%"></i></div><p>Питання ${qi+1} з ${Q.length}</p><h3>${q[0]}</h3><div id="o">${q[1].map((t,i)=>`<button class="opt" data-i="${i}">${t}</button>`).join('')}</div><div id="fb" aria-live="polite"></div>`;
+ box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+}
+function pick(i){
+ if(done)return;done=true;const q=Q[qi],good=i===q[2];if(good)sc++;
+ box.querySelectorAll('.opt').forEach((b,j)=>{b.disabled=true;if(j===q[2])b.classList.add('ok');else if(j===i)b.classList.add('bad')});
+ document.getElementById('fb').innerHTML=`<div class="fb ${good?'ok':'bad'}"><b>${good?'Правильно!':'Неправильно.'}</b> ${q[3]}</div><div class="ctl"><button class="btn p" id="nx">${qi===Q.length-1?'Результат':'Далі'}</button></div>`;
+ const nx=document.getElementById('nx');nx.onclick=()=>{qi++;render()};nx.focus();
+}
+render();
+</script>
+</body>
+</html>
